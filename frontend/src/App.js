@@ -15,15 +15,14 @@ class App extends Component {
       taskList: []
     };
   }
-
-  // Add componentDidMount()
+  
   componentDidMount() {
     this.refreshList();
   }
 
  
   refreshList = () => {
-    axios   //Axios to send and receive HTTP requests
+    axios 
       .get("http://localhost:8000/api/tasks/")
       .then(res => this.setState({ taskList: res.data }))
       .catch(err => console.log(err));
@@ -92,56 +91,42 @@ class App extends Component {
       </li>
     ));
   };
-  // ///////////////////////////////////////////////////////////
 
-  ////add this after modal creation
-  toggle = () => {//add this after modal creation
-    this.setState({ modal: !this.state.modal });//add this after modal creation
+  toggle = () => {
+    this.setState({ modal: !this.state.modal });
   };
-  // handleSubmit = item => {//add this after modal creation
-  //   this.toggle();//add this after modal creation
-  //   alert("save" + JSON.stringify(item));//add this after modal creation
-  // };
 
-  // Submit an item
   handleSubmit = item => {
     this.toggle();
     if (item.id) {
-      // if old post to edit and submit
+    
       axios
         .put(`http://localhost:8000/api/tasks/${item.id}/`, item)
         .then(res => this.refreshList());
       return;
     }
-    // if new post to submit
+   
     axios
       .post("http://localhost:8000/api/tasks/", item)
       .then(res => this.refreshList());
   };
 
-  // Delete item
   handleDelete = item => {
     axios
       .delete(`http://localhost:8000/api/tasks/${item.id}/`)
       .then(res => this.refreshList());
   };
-  // handleDelete = item => {//add this after modal creation
-  //   alert("delete" + JSON.stringify(item));//add this after modal creation
-  // };
 
-  // Create item
   createItem = () => {
     const item = { title: "", description: "", completed: false };
     this.setState({ activeItem: item, modal: !this.state.modal });
   };
 
-  //Edit item
+
   editItem = item => {
     this.setState({ activeItem: item, modal: !this.state.modal });
   };
 
-
-  // -I- Start by visual effects to viewer
   render() {
     return (
       <main className="content">
